@@ -73,14 +73,21 @@
     <center>SIGNUP FORM</center><br>
         
         
-        <label for="username">UserName:</label>
-        <input type="text" id="username" name="username" required>
+        <label for="username">FirstName:</label>
+        <input type="text" id="firstname" name="firstname" required>
+            
+        <label for="username">LastName:</label>
+        <input type="text" id="lastname" name="lastname" required>
 
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
 
+        <label for="phoneno">Phone_no:</label>
+        <input type="password" id="phoneno" name="phoneno" required>
+        
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
+        
 
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" id="confirmPassword"  name="confirmPassword" required>

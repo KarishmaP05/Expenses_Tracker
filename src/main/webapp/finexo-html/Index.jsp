@@ -111,9 +111,12 @@ if(session.getAttribute("name")==null){
                     <h1>
                       Expenses_Tracker
                     </h1>
-                    <p>
-                      Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
-                    </p>
+                     <p>"Effortlessly track and manage your finances with this intuitive expenses tracker."   </p>
+
+                   <p>"Stay on top of your spending, view insightful summaries, and achieve financial clarity."</p>
+                    
+                   <p>"Streamlined budgeting, timely reminders, and customizable categories for seamless money management."</p>
+                    
                     
                   </div>
                 </div>
@@ -133,9 +136,12 @@ if(session.getAttribute("name")==null){
                     <h1>
                       Expenses_Tracker
                     </h1>
-                    <p>
-                      Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
-                    </p>
+                     <p>"Effortlessly track and manage your finances with this intuitive expenses tracker."   </p>
+
+                   <p>"Stay on top of your spending, view insightful summaries, and achieve financial clarity."</p>
+                    
+                   <p>"Streamlined budgeting, timely reminders, and customizable categories for seamless money management."</p>
+                    
                     
                   </div>
                 </div>
@@ -155,9 +161,12 @@ if(session.getAttribute("name")==null){
                     <h1>
                       Expenses_Tracker
                     </h1>
-                    <p>
-                      Explicabo esse amet tempora quibusdam laudantium, laborum eaque magnam fugiat hic? Esse dicta aliquid error repudiandae earum suscipit fugiat molestias, veniam, vel architecto veritatis delectus repellat modi impedit sequi.
-                    </p>
+                    
+                   <p>"Effortlessly track and manage your finances with this intuitive expenses tracker."   </p>
+
+                   <p>"Stay on top of your spending, view insightful summaries, and achieve financial clarity."</p>
+                    
+                   <p>"Streamlined budgeting, timely reminders, and customizable categories for seamless money management."</p>
                     
                   </div>
                 </div>

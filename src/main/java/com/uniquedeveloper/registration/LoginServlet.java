@@ -21,7 +21,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String Email=request.getParameter("email");
-		int Password=Integer.parseInt(request.getParameter("password"));
+		String Password=request.getParameter("password");
 		
 		HttpSession session=request.getSession();
 		RequestDispatcher dispatcher=null;
@@ -34,15 +34,19 @@ public class LoginServlet extends HttpServlet {
 			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Expenses?useSSL=false","root","admin"); 
 			
             
-           PreparedStatement ps=con.prepareStatement("select * from SignUp where Email=? and Password=?");  
+           PreparedStatement ps=con.prepareStatement("select * from Users where email=? and password=?");  
  
            ps.setString(1,Email);  
-           ps.setInt(2,Password);  
+           ps.setString(2,Password);  
              
            ResultSet rs=ps.executeQuery(); 
            
            if(rs.next()) {
-        	   session.setAttribute("name",rs.getString("Name"));
+        	   session.setAttribute("name",rs.getString("first_name"));
+        	   session.setAttribute("id",rs.getString("id"));
+        	   session.setAttribute("email",rs.getString("email"));
+        	   
+        	   
         	   dispatcher=request.getRequestDispatcher("DashBoard.jsp");
         	 
            }else {
