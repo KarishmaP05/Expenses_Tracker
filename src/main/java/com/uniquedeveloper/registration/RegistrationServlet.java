@@ -69,11 +69,7 @@ public class RegistrationServlet extends HttpServlet {
 			
 			
 			}
-			
-//			ps.setString(2,Name);  
-//			ps.setString(3,Email);  
-//			ps.setInt(4,Password); 
-//			
+		
 			
 		
 			dispatcher=request.getRequestDispatcher("Registration.jsp");
@@ -93,7 +89,7 @@ public class RegistrationServlet extends HttpServlet {
 			}  
 			dispatcher.forward(request, response);
 			
-//			System.out.println(ps.executeUpdate());
+
 			
 			
 			}catch(Exception e){

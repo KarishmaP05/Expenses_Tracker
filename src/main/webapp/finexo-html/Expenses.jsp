@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.sql.Connection , java.sql.DriverManager, java.sql.PreparedStatement, java.sql.ResultSet"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,7 +80,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  ">
               <li class="nav-item ">
-                <a class="nav-link" href="Index.jsp">Home </a>
+                <a class="nav-link" href="DashBoard.jsp">Home </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="Income.jsp"> Income </a>
@@ -112,15 +112,16 @@
     
 
     <!-- Add Income Button -->
-	 <button id="addIncomeButton" onclick="showIncomeForm()">Add Income</button>
+	 <button id="addIncomeButton" onclick="showIncomeForm()">Add Expenses</button>
 
     <!-- Income Entry Form (Initially Hidden) -->
     <div id="incomeForm" style="display: none; position: absolute;">
         <!-- Close Button -->
         <span class="close-button" onclick="closeIncomeForm()">&#10006;</span>
 
-        <h2>Add Income Details</h2>
-        <form id="incomeDetailsForm">
+        <h2>Add Expenses Details</h2>
+        <form id="incomeDetailsForm" method="post" action="Addexpenses">
+        
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required><br>
 
@@ -136,12 +137,12 @@
             <label for="note">Note:</label>
             <textarea id="note" name="note" rows="4"></textarea><br>
 
-            <input type="button" value="Add" onclick="addIncomeEntry()">
+            <input type="submit" value="Add">
         </form>
     </div>
 
     <!-- Display Income Entries in a Table -->
-    <h2>Income Entries</h2>
+    <h2>Expenses Entries</h2>
     <table id="incomeTable" border="1">
         <tr>
             <th>Name</th>
@@ -150,6 +151,42 @@
             <th>Date</th>
             <th>Note</th>
         </tr>
+        
+         <% 
+        try{
+        	Class.forName("com.mysql.jdbc.Driver"); 
+			 
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Expenses?useSSL=false","root","admin"); 
+			
+		
+		      
+	        PreparedStatement ps=con.prepareStatement("select * from Expenses where user_id="+session.getAttribute("id")); 
+	        
+	        ResultSet rs=ps.executeQuery(); 
+	       
+	        while(rs.next()){
+	        	
+	        	
+	        	 %>
+	        	 
+	        	 <tr>
+	        	 <td> <%=rs.getString("name") %></td>
+	        	 <td> <%=rs.getString("category") %></td>
+	        	 <td> <%=rs.getFloat("amount") %></td>
+	        	 <td> <%=rs.getString("date") %></td>
+	        	 <td> <%=rs.getString("note") %></td>
+	        	 
+	        	 </tr>
+	        	
+	      		
+	       <%  }
+	        
+        	
+        }catch(Exception e){
+			
+			System.out.println(e);
+		}
+        %>
     </table>
 
     <script>
@@ -163,34 +200,6 @@
             incomeForm.style.display = "none";
         }
 
-        function addIncomeEntry() {
-            var name = document.getElementById("name").value;
-            var category = document.getElementById("category").value;
-            var amount = document.getElementById("amount").value;
-            var date = document.getElementById("date").value;
-            var note = document.getElementById("note").value;
-
-            var incomeTable = document.getElementById("incomeTable");
-
-            var newRow = incomeTable.insertRow(-1);
-            var cell1 = newRow.insertCell(0);
-            var cell2 = newRow.insertCell(1);
-            var cell3 = newRow.insertCell(2);
-            var cell4 = newRow.insertCell(3);
-            var cell5 = newRow.insertCell(4);
-
-            cell1.innerHTML = name;
-            cell2.innerHTML = category;
-            cell3.innerHTML = amount;
-            cell4.innerHTML = date;
-            cell5.innerHTML = note;
-
-            // Clear the form
-            document.getElementById("incomeDetailsForm").reset();
-
-            // Close the form after submission
-            closeIncomeForm();
-        }
     </script>
 </body>
 </html>
