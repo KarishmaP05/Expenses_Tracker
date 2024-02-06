@@ -53,7 +53,7 @@
 
 <!-- <body> -->
     <!-- <h1>Income Tracker</h1> -->
-    <body class="sub_page">
+    <body class="sub_page" style="background-color:#F0F8FF">
     
 
 
@@ -138,6 +138,9 @@
 
             <label for="note">Note:</label>
             <textarea id="note" name="note" rows="4"></textarea><br>
+            
+             <label for="note">Note:</label>
+            <textarea id="note" name="note" rows="4"></textarea><br>
 
             <input type="submit" value="Add">
             
@@ -153,6 +156,8 @@
             <th>Amount</th>
             <th>Date</th>
             <th>Note</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         
        
@@ -182,7 +187,8 @@
 	        	 <td> <%=rs.getFloat("amount") %></td>
 	        	 <td> <%=rs.getString("date") %></td>
 	        	 <td> <%=rs.getString("note") %></td>
-	        	 
+	        	 <td><a href=""><i class="fa fa-edit" style="font-size:15px"></i>edit</a></td>
+	        	 <td><a href=""><i class="fa fa-trash" aria-hidden="true" style="font-size:20px;color:red"></i>&nbsp;delete</a></td>
 	        	 </tr>
 	        	
 	      		

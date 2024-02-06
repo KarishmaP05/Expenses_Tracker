@@ -53,7 +53,7 @@
 
 <!-- <body> -->
     <!-- <h1>Income Tracker</h1> -->
-    <body class="sub_page">
+    <body class="sub_page" style="background-color:#F0F8FF">
 
   <div class="hero_area">
 

@@ -104,15 +104,10 @@
   </div>
 
 
-<body>
+<body style="background-color:#F0F8FF">
 
-    <div class="container">
+    <div class="container" style="background-color:#F0F8FF">
 
-        
-        
-        
-        
-        
         <h2 id="setting-text" >My Profile</h2>
 
         <div class="btm">

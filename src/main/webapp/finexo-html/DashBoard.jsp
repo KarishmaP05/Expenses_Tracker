@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"  import="java.sql.*, java.util.ArrayList , java.util.Calendar , java.util.List, java.util.Date"%>
-    
+    pageEncoding="UTF-8"  import="java.sql.*, java.util.ArrayList , java.util.Calendar , java.util.List, java.util.Date,java.util.Map, java.util.HashMap, java.time.LocalDate,java.util.Arrays"%>
+  
 <!DOCTYPE html>
 <html>
 
@@ -38,10 +38,9 @@
   <link href="css/responsive.css" rel="stylesheet" />
   
    <link rel="stylesheet" href="css/dashboard.css">  <%--CSS --%>
-
 </head>
 
-<body class="sub_page">
+<body class="sub_page" style="background-color:#F0F8FF">
 
   <div class="hero_area">
 
@@ -99,27 +98,30 @@
 
 
     <main class="container">
-        <div class="left-chart">
-            <div class="chart-container">
-                <canvas id="chart1"></canvas>
-            </div>
-            <div class="chart-container">
-                <canvas id="chart2"></canvas>
-            </div>
+  
+        <div class="left-chart"> 
+    	<h2><b style="margin-left: 4em;">WELCOME, <%=session.getAttribute("name")%></b></h2>
+    	
+    	<div class="fields">
+    	<img src="images/DashBoard-img.png"  style="margin-right: auto; margin-left: 1em;">
+    	</div>    
         </div>
+        
         <div class="right-chart">
-
-
-            <div class="chart-container">
-                <canvas id="chart3"></canvas>
-            </div>
-
-            <div class="feilds">
+        <div class="fields">
+    	
+    	<iframe width="300" height="200" src="https://www.youtube.com/embed/NsqjAA6Tk-Q?si=Muka2WVQ0OA8CJ63"
+    	 title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    	 allowfullscreen style="margin-top: 8em;margin-left: 2em;"></iframe>
+  		<p style="margin-left: 6em; margin-top:1em;"><b>You can Refer this video.</b></p>
+    	</div>  
+           <div class="feilds">
            <a href="Income.jsp"><button class="income">Income</button></a>
            <a href="Expenses.jsp"><button class="expense">Expense</button></a>
            
            
             <%! float Balance=0;%>
+            
             <% 
         try{
         	Class.forName("com.mysql.jdbc.Driver"); 
@@ -150,10 +152,11 @@
 
         </div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    
-    
-             <% 
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+     -->
+    <%-- 
+  
+     <% 
         try{
         	
         	Class.forName("com.mysql.jdbc.Driver"); 
@@ -167,8 +170,11 @@
 	        String sqlQuery="select amount,date from Incomes where date>=? order by date desc limit 10"; 
 	        
 	        Calendar calendar = Calendar.getInstance();
+	        
             java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
+            
             calendar.add(Calendar.DATE, -10);
+            
             java.sql.Date tenDaysAgoDate = new java.sql.Date(calendar.getTime().getTime());
 
             try (PreparedStatement preparedStatement = con.prepareStatement(sqlQuery)) {
@@ -208,37 +214,193 @@
             System.out.println("Stored Amounts: " + amounts);
             System.out.println("Stored Dates: " + dates);
             
-           
-	        
-	  
-            Double[] amountsArray = amounts.toArray(new Double[0]);
+            StringBuilder amountsStringBuilder = new StringBuilder();
+
+            for (Double amount : amounts) {
+                amountsStringBuilder.append(amount).append(",");
+            }
+
+            // Remove the trailing comma
+            if (amountsStringBuilder.length() > 0) {
+                amountsStringBuilder.deleteCharAt(amountsStringBuilder.length() - 1);
+            }
+
+            // Assign the StringBuilder to amountsString
+            String amountsString = amountsStringBuilder.toString();
             
         }catch(Exception e){
 			
 			System.out.println(e);
 		}
         
-             %> 
-      
+             %>   
+             
+            
+               
+          --%>   
+          
+          
+          <%-- 
+     <%! String amt="";%> --%>
+<%-- 
+<%
+    try {
+        Class.forName("com.mysql.jdbc.Driver");
+
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Expenses?useSSL=false", "root", "admin");
+
+        List<Double> amounts = new ArrayList<>();
+        List<Date> dates = new ArrayList<>();
+
+        String sqlQuery = "select amount, date from Incomes where date >= ? order by date desc limit 10";
+
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
+        calendar.add(Calendar.DATE, -10);
+        java.sql.Date tenDaysAgoDate = new java.sql.Date(calendar.getTime().getTime());
+
+        try (PreparedStatement preparedStatement = con.prepareStatement(sqlQuery)) {
+            preparedStatement.setDate(1, tenDaysAgoDate);
+
+            // Execute the query
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // Process the result set
+                
+              /*  Date temp_date=null;
+               double amountsum=0; */
+                
+                while (resultSet.next()) {
+                	
+                    double amount = resultSet.getDouble("amount");
+                    Date date = resultSet.getDate("date");
+                    
+                   
+                    
+                 /*    if(temp_date==date){
+                    	amountsum+=amount;
+                    }
+                    else{
+                    	temp_date=date;
+                    	amountsum=amount; */
+                    // Store values in the arrays
+                    	
+                   /*  } */
+                    	amounts.add(amount);
+                    	dates.add(date);
+
+                }
+            } 
+        }
+
+        calendar.setTime(currentDate);
+
+        // Check for missing days and fill with zeros
+        for (int i = 0; i < 10; i++) {
+            calendar.add(Calendar.DATE, -1);
+            Date previousDate = calendar.getTime();
+
+            if (!dates.contains(previousDate)) {
+                amounts.add(0.0);
+                dates.add(previousDate);
+            }
+        }
+
+        System.out.println("Stored Amounts: " + amounts);
+        System.out.println("Stored Dates: " + dates);
+        
+        Date[] dates = {new Date(), new Date(), new Date(), new Date()};
+        double[] amounts = {100.0, 200.0, 150.0, 250.0};
+
+        // Create a map to store aggregated amounts for each unique date
+        Map<LocalDate, Double> aggregatedAmounts = new HashMap<>();
+
+        // Iterate through the arrays and aggregate amounts
+        for (int i = 0; i < dates.length; i++) {
+            // Convert Date to LocalDate
+            LocalDate currentDate = dates[i].toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+            double currentAmount = amounts[i];
+
+            // Check if the date is already in the map
+            if (aggregatedAmounts.containsKey(currentDate)) {
+                // If the date is present, add the current amount to the existing amount
+                aggregatedAmounts.put(currentDate, aggregatedAmounts.get(currentDate) + currentAmount);
+            } else {
+                // If the date is not present, add a new entry to the map
+                aggregatedAmounts.put(currentDate, currentAmount);
+            }
+        }
+
+        // Create arrays to store unique dates and their corresponding aggregated amounts
+        LocalDate[] uniqueDates = new LocalDate[aggregatedAmounts.size()];
+        double[] aggregatedAmountsArray = new double[aggregatedAmounts.size()];
+
+        // Populate the arrays with values from the map
+        int index = 0;
+        for (Map.Entry<LocalDate, Double> entry : aggregatedAmounts.entrySet()) {
+            uniqueDates[index] = entry.getKey();
+            aggregatedAmountsArray[index] = entry.getValue();
+            index++;
+        }
+
+        // Print the arrays
+        System.out.println("Unique Dates Array: " + Arrays.toString(uniqueDates));
+        System.out.println("Aggregated Amounts Array: " + Arrays.toString(aggregatedAmountsArray));
     
+   
+        
+        
+        
+        StringBuilder amountsStringBuilder = new StringBuilder();
+        for (Double amount : amounts) {
+            amountsStringBuilder.append(amount).append(",");
+        }
+
+        // Remove the trailing comma
+        if (amountsStringBuilder.length() > 0) {
+            amountsStringBuilder.deleteCharAt(amountsStringBuilder.length() - 1);
+        }
+
+        // Assign the StringBuilder to amountsString
+        String amountsString = amountsStringBuilder.toString();
+        System.out.println(amountsString);
+
+  		amt=amountsString;
+
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+%>
+   <input type="hidden" id="amt" value="<%=amt %>">      
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            
-            
-        	   <%-- var amountsArray = [<%
-        	        for (int i = 0; i < amounts.size(); i++) {
-        	            out.print(amounts.get(i));
-        	            if (i < amounts.size() - 1) {
-        	                out.print(",");
-        	            }
-        	        }
-        	    %>] --%>; 
-
+    
         	 // Dummy data for the first chart (bar chart)
           const labels1 = ["January", "February", "March", "April", "May","January", "February", "March", "April", "May"]; 
-         
-          const data1=[34,78,56,34,29]
-        	  
+          
+          var amt=document.getElementById("amt").value; 
+          console.log(amt);
+          
+       // Your comma-separated string
+          var amountsString = "30000.0,3000.0,456.0,35000.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0";
+
+          // Convert the string to an array using the split method
+          var amountsArray = amountsString.split(',');
+
+
+          for (var i = 0; i < amountsArray.length; i++) {
+        	    amountsArray[i] = parseFloat(amountsArray[i]);
+        	}
+
+        	console.log(amountsArray);
+
+ 
+        	const data1=amountsArray 
+          
+           
+<script >
+       	 // Dummy data for the first chart (bar chart)
+         const labels1 = ["January", "February", "March", "April", "May","January", "February", "March", "April", "May"]; 
+         const labels1=[34,56,34,67,45,57]
               // Dummy data for the second chart (line chart)
               const labels2 = ["June", "July", "August", "September", "October"];
               const data2 = [45, 70, 42, 60, 75];
@@ -309,6 +471,7 @@
           });  	  
             
     </script>
+    --%>
 </body>
 
 
